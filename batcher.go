@@ -1,4 +1,4 @@
-package awesomeProject21
+package batchy
 
 import (
 	"context"
@@ -57,7 +57,7 @@ type BatchConfig struct {
 }
 
 // NewRingBatcher 新建一个Batch任务
-func NewRingBatcher[T any](processor Processor[T], batchConfig BatchConfig) (*BatcherInstance[T], error) {
+func NewRingBatcher[T any](processor Processor[T], batchConfig BatchConfig) (Batcher[T], error) {
 	var err error
 	if batchConfig.Ctx == nil {
 		batchConfig.Ctx = context.Background()

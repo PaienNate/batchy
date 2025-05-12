@@ -1,4 +1,4 @@
-package awesomeProject21
+package batchy
 
 import (
 	"context"
@@ -22,7 +22,7 @@ type ChanBatcherInstance[T any] struct {
 func NewChanBatcher[T any](
 	processor Processor[T],
 	batchConfig BatchConfig,
-) (*ChanBatcherInstance[T], error) {
+) (Batcher[T], error) {
 	var err error
 	if batchConfig.Ctx == nil {
 		batchConfig.Ctx = context.Background()
