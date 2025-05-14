@@ -101,7 +101,7 @@ func NewRingBatcher[T any](processor Processor[T], batchConfig BatchConfig) (Bat
 	base.InitialInterval = 10 * time.Millisecond
 	base.RandomizationFactor = 0.5
 	base.MaxInterval = 300 * time.Millisecond
-	base.MaxElapsedTime = 1 * time.Hour
+	base.MaxElapsedTime = 30 * time.Second
 	instance.baseBackoff = base
 	return instance, nil
 }
