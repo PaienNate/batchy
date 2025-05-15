@@ -82,6 +82,7 @@ func TestBatcherPerformance(t *testing.T) {
 				if err != nil {
 					fmt.Println("Error adding item:", err)
 				}
+				time.Sleep(time.Duration(rand.Intn(100)) * time.Millisecond)
 			}
 		}(p)
 	}

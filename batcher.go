@@ -57,6 +57,7 @@ type BatchConfig struct {
 }
 
 // NewRingBatcher 新建一个Batch任务
+// TODO：疑似有点BUG，会导致内存无限升高
 func NewRingBatcher[T any](processor Processor[T], batchConfig BatchConfig) (Batcher[T], error) {
 	var err error
 	if batchConfig.Ctx == nil {
@@ -79,10 +80,10 @@ func NewRingBatcher[T any](processor Processor[T], batchConfig BatchConfig) (Bat
 	instance := &BatcherInstance[T]{
 		processor: processor,
 		itemLimit: batchConfig.BatchSize,
-		queue:     ringbuf.New[T](uint32(batchConfig.QueueSize)),
-		ctx:       ctx,                 // claude改
-		cancel:    cancel,              // claude改
-		timeout:   batchConfig.Timeout, // claude改
+		queue:     ringbuf.New[T](uint32(batchConfig.QueueSize)), // ringbuf.New[T](uint32(batchConfig.QueueSize)),
+		ctx:       ctx,                                           // claude改
+		cancel:    cancel,                                        // claude改
+		timeout:   batchConfig.Timeout,                           // claude改
 	}
 	instance.ants, err = ants.NewPool(batchConfig.PoolSize) // 协程数等于 BatchSize，根据实际负载调整
 	if err != nil {
@@ -191,6 +192,6 @@ func (b *BatcherInstance[T]) Add(item T) error {
 // Stop stops the BatcherInstance and prevents further additions
 func (b *BatcherInstance[T]) Stop() {
 	b.stopped.Store(true) // claude改
-	b.cancel()            // claude改
 	b.ants.Release()      // claude改
+	b.cancel()            // claude改
 }

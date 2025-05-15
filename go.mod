@@ -12,3 +12,7 @@ require (
 	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 )
+
+//replace (
+//	github.com/hedzr/go-ringbuf/v2 v2.2.1 => github.com/PaienNate/go-ringbuf/v2 v2.0.0-20250515043051-f38d5659b1dc
+//)
