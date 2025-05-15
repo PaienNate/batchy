@@ -63,7 +63,7 @@ func NewChanBatcher[T any](
 	instance.workerCount = batchConfig.PoolSize
 	// 启动worker
 	for i := 0; i < batchConfig.PoolSize; i++ {
-		pool.Submit(func() { instance.worker() })
+		pool.Submit(func() { instance.worker(i) })
 	}
 
 	return instance, nil
