@@ -1,11 +1,12 @@
 package test
 
 import (
+	"log"
+	"time"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"log"
-	"time"
 )
 
 // 复杂指标结构体

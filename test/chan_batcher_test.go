@@ -3,12 +3,13 @@ package test
 import (
 	"context"
 	"fmt"
-	batcher3 "github.com/PaienNate/batchy"
 	"math/rand"
 	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
+
+	batcher3 "github.com/PaienNate/batchy"
 )
 
 func TestChanBatcherPerformance(t *testing.T) {
@@ -23,6 +24,9 @@ func TestChanBatcherPerformance(t *testing.T) {
 
 	// 初始化数据库
 	db := initDB()
+
+	// 清空数据库表，确保测试环境干净
+	db.Exec("TRUNCATE TABLE complex_metrics")
 
 	// 使用原子计数器跟踪已处理的项目数
 	var processedCount int64
@@ -103,7 +107,7 @@ func TestChanBatcherPerformance(t *testing.T) {
 		t.Errorf("处理的项目数量不匹配: 预期 %d, 实际 %d", totalItems, processedCount)
 	}
 
-	// 检查数据库中的记录数
+	// 检查数据库中的记录数 - 必须精确匹配
 	var dbCount int64
 	db.Model(&ComplexMetrics{}).Count(&dbCount)
 	if dbCount != totalItems {
